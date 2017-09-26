@@ -9,7 +9,6 @@
 #define File_Error -2
 
 int arglen(char *word);
-int printF(char *filename);
 int *countOccurrences(char *word, int word_len, char *filename, int *articleCount);
 void cleanBuffer(char *buffer, int size);
 int compare(char *str1, char *str2);
@@ -31,7 +30,7 @@ int main(int agrc, char **argv)
 
     int articleCount;
 	int *n = countOccurrences(word, word_len, argv[2], &articleCount);
-	printf("\nacticle count = %d", articleCount);
+//	printf("\nacticle count = %d", articleCount);
 	int d = disp(n, &articleCount);
     printf("\n");
 	return 0;
@@ -43,8 +42,8 @@ int *countOccurrences(char *word, int word_len, char *filename, int *articleCoun
 	if (f == NULL)
 		return NULL;
 
-    printf("\nword: %s", word);
-	printf("\nword_len = %d", word_len);
+//	printf("\nword: %s", word);
+//	printf("\nword_len = %d", word_len);
 	char buffer[word_len];
 	cleanBuffer(buffer, word_len);
 	int b_id = 0;
@@ -98,10 +97,10 @@ int *countOccurrences(char *word, int word_len, char *filename, int *articleCoun
 		}
 	}
 	occr[*articleCount-1] = occrCount;
-	printf("\n\nКол-во абзацев: %d", *articleCount);
-	printf("\nКол-во вхождений: ");
-	for(int i = 0; i < *articleCount; i++)
-		printf("\n#%d: %d", i, occr[i]);
+//	printf("\n\nКол-во абзацев: %d", *articleCount);
+//	printf("\nКол-во вхождений: ");
+//	for(int i = 0; i < *articleCount; i++)
+//		printf("\n#%d: %d", i, occr[i]);
 
 	return occr;
 }
@@ -111,13 +110,16 @@ int disp(int *occr, int *artclCount)
 	float avg = 0;
 	for(int i = 0; i < *artclCount; i++)
 		avg +=occr[i];
-	printf("\nСумма вхождений: %d", (int) avg);
+//	printf("\nСумма вхождений: %d", (int) avg);
 	avg /= *artclCount;
-	printf("\nСр. арифм. вхождений: %f", avg);
+//	printf("\nСр. арифм. вхождений: %f", avg);
 	float dispersion = 0;
 	for(int i = 0; i < *artclCount; i++)
 		dispersion += pow(occr[i]-avg, 2);
-	dispersion = sqrt(dispersion/(*artclCount-1));
+	if (*artclCount > 1)
+		dispersion = sqrt(dispersion/(*artclCount-1));
+	else
+		dispersion = 0;
 	printf("\nДисперсия вхождений: %f", dispersion);
 	return dispersion;
 }
