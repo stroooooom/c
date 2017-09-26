@@ -85,9 +85,9 @@ int *countOccurrences(char *word, int word_len, char *filename)
 		else if ((ispunct(l) != 0) || (isspace(l) != 0))
 		{
 			occrCount += compare(buffer, word);
-            printf("compare(buffer, word) = %d", compare(word, buffer));
+         /* printf("compare(buffer, word) = %d", compare(word, buffer));
             printf("strcmp(buffer, word) = %d", strcmp(word, buffer));
-            printf("\noccrCount = %d", occrCount);
+            printf("\noccrCount = %d", occrCount); */
 			cleanBuffer(buffer, word_len);
 			b_id = 0;
 		//	printf("\nbuffer cleaned (is != 0)");
