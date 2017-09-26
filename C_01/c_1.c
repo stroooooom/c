@@ -8,7 +8,7 @@
 #define Input_Error -1
 #define File_Error -2
 
-int arglength(char *word);
+int arglen(char *word);
 int printF(char *filename);
 int *countOccurrences(char *word, int word_len, char *filename, int *articleCount);
 void cleanBuffer(char *buffer, int size);
@@ -24,11 +24,11 @@ int main(int agrc, char **argv)
 		return Input_Error;
 	}
 
-    int word_len = arglength(argv[1]);
+    int word_len = arglen(argv[1]);
     char word[word_len];
     for(int i = 0; i < word_len; i++)
         word[i] = tolower(argv[1][i]);
-    
+
     int articleCount;
 	int *n = countOccurrences(word, word_len, argv[2], &articleCount);
 	printf("\nacticle count = %d", articleCount);
@@ -136,31 +136,10 @@ void cleanBuffer(char *buffer, int size)
 		buffer[i] = ' ';
 }
 
-int arglength(char *word)
+int arglen(char *word)
 {
 	int length = 0;
 	while(word[length])
 		length++;
 	return length;
-}
-
-int printF(char *filename)
-{
-	FILE *f = fopen(filename, "r");
-	if (f == NULL)
-	{
-		printf("File_Error: File can not be found\n");
-		return File_Error;
-	}
-
-	char l;
-	while(!feof(f))
-	{
-		fscanf(f, "%c", &l);
-		printf("%c", l);
-		if (l == '\n')
-			printf("(n)");
-	}
-
-	return No_Error;
 }
