@@ -9,7 +9,7 @@
 
 int length(char *word);
 int printF(char *filename);
-int *countOccurrences(char *word, char *filename);
+int *countOccurrences(char *word, int word_len, char *filename);
 void cleanBuffer(char *buffer, int size);
 int compare(char *str1, char *str2);
 
@@ -21,10 +21,14 @@ int main(int agrc, char **argv)
 		return Input_Error;
 	}
 
-	char *word = argv[1];
-
-	int *n = countOccurrences(word, argv[2]);
-
+    int word_len = length(argv[1]);
+    char word[word_len];
+    for(int i = 0; i < word_len; i++)
+        word[i] = argv[1][i];
+    
+//   printF(argv[2]);
+	int *n = countOccurrences(word, word_len, argv[2]);
+    printf("\n");
 	return 0;
 }
 
@@ -34,14 +38,14 @@ void cleanBuffer(char *buffer, int size)
 		buffer[i] = ' ';
 }
 
-int *countOccurrences(char *word, char *filename)
+int *countOccurrences(char *word, int word_len, char *filename)
 {
 	FILE *f = fopen(filename, "r");
 	if (f == NULL)
 		return NULL;
 
-	int word_len = length(word);
-//	printf("\nword_len = %d", word_len);
+    printf("\nword: %s", word);
+	printf("\nword_len = %d", word_len);
 	char buffer[word_len];
 	cleanBuffer(buffer, word_len);
 //	printf("\nclean buffer: %s", buffer);
@@ -81,6 +85,9 @@ int *countOccurrences(char *word, char *filename)
 		else if ((ispunct(l) != 0) || (isspace(l) != 0))
 		{
 			occrCount += compare(buffer, word);
+            printf("compare(buffer, word) = %d", compare(word, buffer));
+            printf("strcmp(buffer, word) = %d", strcmp(word, buffer));
+            printf("\noccrCount = %d", occrCount);
 			cleanBuffer(buffer, word_len);
 			b_id = 0;
 		//	printf("\nbuffer cleaned (is != 0)");
@@ -96,8 +103,8 @@ int *countOccurrences(char *word, char *filename)
 			occr[articleCount-1] = 0;
 			cleanBuffer(buffer, word_len);
 		}
-	//	printf("\n  curr l: %c", l);
-	//	printf("  curr word: %s", buffer);
+		printf("\n  curr l: %c", l);
+		printf("  curr word: %s", buffer);
 	//	printf("  ispunct(%c) = %d   ispunct(%c) = %d", l, ispunct(l), l, isspace(l));
 	}
 	occr[articleCount-1] = occrCount;

@@ -24,7 +24,8 @@ int main(int agrc, char **argv)
 	char *word = argv[1];
 	int word_len = length(word);
 
-	int *n = countOccurrences(word, argv[2]);
+//	int *n = countOccurrences(word, argv[2]);
+//    printF(argv[2]);
 
 	return 0;
 }
