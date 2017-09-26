@@ -28,10 +28,10 @@ int main(int agrc, char **argv)
     for(int i = 0; i < word_len; i++)
         word[i] = tolower(argv[1][i]);
 
-    int articleCount;
+    int articleCount = 0;
 	int *n = countOccurrences(word, word_len, argv[2], &articleCount);
 //	printf("\nacticle count = %d", articleCount);
-	int d = disp(n, &articleCount);
+	disp(n, &articleCount);
     printf("\n");
 	return 0;
 }
@@ -53,7 +53,7 @@ int *countOccurrences(char *word, int word_len, char *filename, int *articleCoun
 	int *occr = (int*) malloc(*articleCount * sizeof(int));
 	occr[*articleCount-1] = 0; //кол-во вхождений в слове по номеру абзаца
 
-	char l; //letter
+	char l = '*'; //letter
 	char previous = '*';
 	int res = 0;
 	while(!feof(f))
