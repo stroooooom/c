@@ -11,7 +11,6 @@
 int arglen(char *word);
 int *countOccurrences(char *word, int word_len, char *filename, int *articleCount);
 void cleanBuffer(char *buffer, int size);
-int compare(char *str1, char *str2);
 int disp(int *occr, int artclCount);
 
 int main(int agrc, char **argv)
@@ -35,7 +34,7 @@ int main(int agrc, char **argv)
         free(n);
     }
     else
-        printf("\nОшибка при открытии файла или выделении памяти");
+        printf("\nПроизошла ошибка при открытии файла или выделении памяти");
     
     printf("\n");
 	return 0;
@@ -66,18 +65,13 @@ int *countOccurrences(char *word, int word_len, char *filename, int *articleCoun
 		current = tolower(current);
 		if (feof(f))
 		{
-			occrCount += compare(buffer, word);
-            if (compare(buffer, word) == 1)
-                printf(" <<");
+            occrCount += (strcmp(buffer, word) == 0) ? 1 : 0;
 			break;
 		}
 		if ((ispunct(current) == 0) && (isspace(current) == 0))
         {
 			if (b_id < word_len)
-			{
-				buffer[b_id] = current;
-				b_id++;
-			}
+				buffer[b_id++] = current;
 			else
 			{
                 while ((ispunct(current) == 0) && (isspace(current) == 0) && (!feof(f)))
@@ -91,29 +85,22 @@ int *countOccurrences(char *word, int word_len, char *filename, int *articleCoun
                 b_id = 0;
 			}
         }
-		if ((ispunct(current) != 0) || (isspace(current) != 0))
+		else if ((ispunct(current) != 0) || (isspace(current) != 0))
 		{
-			occrCount += compare(buffer, word);
-            if (compare(buffer, word) == 1)
-            {
-                printf("\ncur word: ");
-                for(int i = 0; i < word_len; i++)
-                    printf("%c", buffer[i]);
-                printf(" <<");
-            }
+            occrCount += (strcmp(buffer, word) == 0) ? 1 : 0;
 			cleanBuffer(buffer, word_len);
 			b_id = 0;
-		}
 
-		if ((previous == '\n') && (current == '\n'))
-		{
-			occr[*articleCount-1] = occrCount;
-			occrCount = 0;
-			*articleCount += 1;
-			occr = (int*) realloc(occr, *articleCount * sizeof(int));
-			occr[*articleCount-1] = 0;
-			cleanBuffer(buffer, word_len);
-		}
+            if ((previous == '\n') && (current == '\n'))
+            {
+                occr[*articleCount-1] = occrCount;
+                occrCount = 0;
+                *articleCount += 1;
+                occr = (int*) realloc(occr, *articleCount * sizeof(int));
+                occr[*articleCount-1] = 0;
+                cleanBuffer(buffer, word_len);
+            }
+        }
 	}
 	occr[*articleCount-1] = occrCount;
 	printf("\n\nКол-во абзацев: %d", *articleCount);
@@ -141,14 +128,6 @@ int disp(int *occr, int artclCount)
 		dispersion = 0;
 	printf("\nДисперсия вхождений: %f", dispersion);
 	return dispersion;
-}
-
-int compare(char *str1, char *str2)
-{
-	if (strcmp(str1, str2) == 0)
-		return 1;
-	else
-		return 0;
 }
 
 void cleanBuffer(char *buffer, int size)
