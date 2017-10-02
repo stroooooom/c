@@ -2,7 +2,7 @@ CC := gcc
 CFLAGS := -ggdb -Wno-return-local-addr
 OBJS := matrix.o
 
-main : main.exe clean_o
+all : main.exe clean_o
 
 main.exe: $(OBJS) main.o matrix.o
 	$(CC) $(CFLAGS) -o main.exe $(OBJS) main.o

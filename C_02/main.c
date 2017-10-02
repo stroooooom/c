@@ -10,10 +10,16 @@ int main(int argc, char **agrv)
 		for(int i = 1; i < argc; i++)
 		{
 			FILE *file = fopen(agrv[i], "r");
-			Matrix *M = create_matrix_from_file(file);
-			(M != NULL) ? printf("\n'%s': euclidian matrix norm is %g", agrv[i], euclidNorm(M)) : printf("\n'%s': file was not found", agrv[i]);
-			fclose(file);
-			free_matrix(M);
+			if (file == NULL)
+				printf("\n'%s': file was not found", agrv[i]);
+			else
+			{
+				Matrix *M = create_matrix_from_file(file);
+				if (M != NULL)
+					printf("\n'%s': euclidian matrix norm is %g", agrv[i], euclidNorm(M));
+				fclose(file);
+				free_matrix(M);
+			}
 		}
 	else
 		printf("\nError: not enough arguments");
