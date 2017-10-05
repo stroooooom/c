@@ -44,12 +44,14 @@ int get_cols(Matrix* matrix)
 
 void set_elem(Matrix* matrix, int row, int col, double val)
 {
-	matrix->element[(matrix->col)*(row) + col].value = val;
+	if ( (row > 0) || (row < (matrix->row)) || (col > 0) || (col < matrix->col) )
+		matrix->element[(matrix->col)*(row) + col].value = val;
 }
 
 double get_elem(Matrix* matrix, int row, int col)
 {
-	return matrix->element[(matrix->col)*(row) + col].value;
+	if ( (row > 0) || (row < (matrix->row)) || (col > 0) || (col < matrix->col) )
+		return matrix->element[(matrix->col)*(row) + col].value;
 }
 
 void free_matrix(Matrix* matrix)
