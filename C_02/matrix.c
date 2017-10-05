@@ -52,6 +52,8 @@ double get_elem(Matrix* matrix, int row, int col)
 {
 	if ( (row > 0) || (row < (matrix->row)) || (col > 0) || (col < matrix->col) )
 		return matrix->element[(matrix->col)*(row) + col].value;
+	else
+		return NaN;
 }
 
 void free_matrix(Matrix* matrix)
