@@ -15,7 +15,7 @@ typedef struct Matrix {
 	Element* element;
 } Matrix;
 
-Matrix M;
+Matrix M; // mistake (need pointer)
 
 Matrix* create_matrix_from_file(FILE* file);
 Matrix* create_matrix(int row, int col);
