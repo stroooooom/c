@@ -14,12 +14,14 @@ Matrix* create_matrix(int row, int col)
 
 Matrix* create_matrix_from_file(FILE* file)
 {
+	if (file == NULL)
+		return NULL;
 	if (fscanf(file, "%d %d", &M->row, &M->col) != 2)
+		return NULL;
+	if ((M->row < 1) || (M->col < 1))
 		return NULL;
 	M->element = (Element *) malloc(sizeof(Element) * M->row * M->col);
 	if (M->element == NULL)
-		return NULL;
-	if ((M->row < 1) || (M->col < 1))
 		return NULL;
 	for(int i = 0; i < M->row; i++)
 		for(int j = 0; j < M->col; j++)
