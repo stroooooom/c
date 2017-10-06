@@ -29,7 +29,9 @@ int main(int argc, char **agrv)
 double euclidNorm(Matrix* M)
 {
 	double sum = 0;
-	for(int i = 0; i < M->row*M->col; i++)
+	int rows = get_rows(M);
+	int cols = get_cols(M);
+	for(int i = 0; i < rows*cols; i++)
 		sum += pow(M->element[i].value, 2);
 	return sqrt(sum);
 }
