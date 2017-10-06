@@ -11,15 +11,15 @@ int main(int argc, char **agrv)
 		{
 			FILE *file = fopen(agrv[i], "r");
 			if (file == NULL)
-				printf("\n'%s': file was not found", agrv[i]);
-			else
 			{
-				Matrix *M = create_matrix_from_file(file);
-				if (M != NULL)
-					printf("\n'%s': euclidian matrix norm is %g", agrv[i], euclidNorm(M));
-				fclose(file);
-				free_matrix(M);
+				printf("\n'%s': file was not found", agrv[i]);
+				return 1;
 			}
+			Matrix *M = create_matrix_from_file(file);
+			if (M != NULL)
+				printf("\n'%s': euclidian matrix norm is %g", agrv[i], euclidNorm(M));
+			fclose(file);
+			free_matrix(M);
 		}
 	else
 		printf("\nError: not enough arguments");
