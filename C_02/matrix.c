@@ -4,10 +4,10 @@
 
 Matrix* create_matrix(int row, int col)
 {
-	M->row = row;
-	M->col = col;
-	M->element = (Element*) malloc(sizeof(Element) * row * col);
-	if (M->element == NULL)
+	M.row = row;
+	M.col = col;
+	M.element = (Element*) malloc(sizeof(Element) * row * col);
+	if (M.element == NULL)
 		return NULL;
 	return &M;
 }
@@ -16,20 +16,20 @@ Matrix* create_matrix_from_file(FILE* file)
 {
 	if (file == NULL)
 		return NULL;
-	if (fscanf(file, "%d %d", &M->row, &M->col) != 2)
+	if (fscanf(file, "%d %d", &M.row, &M.col) != 2)
 		return NULL;
-	if ((M->row < 1) || (M->col < 1))
+	if ((M.row < 1) || (M.col < 1))
 		return NULL;
-	M->element = (Element *) malloc(sizeof(Element) * M->row * M->col);
-	if (M->element == NULL)
+	M.element = (Element *) malloc(sizeof(Element) * M.row * M.col);
+	if (M.element == NULL)
 		return NULL;
-	for(int i = 0; i < M->row; i++)
-		for(int j = 0; j < M->col; j++)
+	for(int i = 0; i < M.row; i++)
+		for(int j = 0; j < M.col; j++)
 		{
-			if(fscanf(file, "%lf", &M.element[i*M->col+j].value) != 1)
+			if(fscanf(file, "%lf", &M.element[i*M.col+j].value) != 1)
 				return NULL;
-			M.element[i*M->col+j].row_id = i;
-			M.element[i*M->col+j].col_id = j;
+			M.element[i*M.col+j].row_id = i;
+			M.element[i*M.col+j].col_id = j;
 		}
 	return &M;
 }
