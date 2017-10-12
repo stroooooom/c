@@ -34,8 +34,6 @@ int main(int argc, char **argv)
 
 int readFile(char *filename)
 {
-	setbuf(stdout, NULL);
-
 	FILE *file = fopen(filename, "r");
 //	printf("\ntrying to open '%s'...\n\n", filename);
 	assert(file);
