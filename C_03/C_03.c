@@ -17,7 +17,6 @@ TreeNode *createNode(int number, TreeNode *node, TreeNode *parent);
 TreeNode *addNode(int number, TreeNode *tree);
 TreeNode *removeNode(int number, TreeNode *tree);
 void *freeNode(TreeNode *node);
-void *infoNode(TreeNode *node);
 int readFile(char *filename);
 
 int main(int argc, char **argv)
@@ -79,17 +78,6 @@ int readFile(char *filename)
     tree = NULL;
     fclose(file);
 	return 0;
-}
-
-void *infoNode(TreeNode *node)
-{
-	if (node)
-	{
-		printf("\nNODE: %d", node->value);
-		(node->parent) ? printf("  PARENT: %d", node->parent->value) : printf("  PARENT: NOT EXISTS");
-		infoNode(node->left);
-		infoNode(node->right);
-	}
 }
 
 void *freeNode(TreeNode *node)
