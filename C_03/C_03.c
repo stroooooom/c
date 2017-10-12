@@ -40,7 +40,7 @@ int readFile(char *filename)
 //	printf("\ntrying to open '%s'...\n\n", filename);
 	assert(file);
 	TreeNode *tree = NULL;
-	while(!feof(file))
+	while (!feof(file))
 	{
 		int res = 0;
 		char sym = '*';
