@@ -14,7 +14,7 @@ main.o: main.c node.h
 	$(CC) $(CFLAGS) -c main.c
 
 clean :
-	$(RM) *.o *.exe
+	$(RM) *.o *.exe *.out
 
 clean_o :
 	$(RM) *.o
