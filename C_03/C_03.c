@@ -83,7 +83,7 @@ void *infoNode(TreeNode *node)
 	if (node)
 	{
 		printf("\nNODE: %d", node->value);
-		(node->parent) ? printf("  PARENT: %d", node->parent->value) : printf("  PARENT: NOT EXISTS", node->value);
+		(node->parent) ? printf("  PARENT: %d", node->parent->value) : printf("  PARENT: NOT EXISTS");
 		infoNode(node->left);
 		infoNode(node->right);
 	}
