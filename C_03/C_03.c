@@ -35,8 +35,11 @@ int main(int argc, char **argv)
 int readFile(char *filename)
 {
 	FILE *file = fopen(filename, "r");
-//	printf("\ntrying to open '%s'...\n\n", filename);
-	assert(file);
+    if (!file)
+    {
+        printf("\nError: File '%s' cannot be opened", filename);
+        return 1;
+    }
 	TreeNode *tree = NULL;
 	while (!feof(file))
 	{
