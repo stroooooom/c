@@ -75,6 +75,8 @@ int readFile(char *filename)
 		}
 	}
 	freeNode(tree);
+    tree = NULL;
+    fclose(file);
 	return 0;
 }
 
