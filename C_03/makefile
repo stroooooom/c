@@ -2,10 +2,10 @@ CC := gcc
 CFLAGS := -ggdb -Wno-return-type
 OBJS := node.o
 
-all : main.exe clean_o
+all : main clean_o
 
-main.exe: $(OBJS) main.o node.o
-	$(CC) $(CFLAGS) -o main.exe $(OBJS) main.o
+main: $(OBJS) main.o node.o
+	$(CC) $(CFLAGS) -o main $(OBJS) main.o
 
 node.o: node.c node.h
 	$(CC) $(CFLAGS) -c node.c
