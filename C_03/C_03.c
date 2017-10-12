@@ -105,7 +105,7 @@ void *freeNode(TreeNode *node)
 TreeNode *removeNode(int number, TreeNode *tree)
 {
 	TreeNode *cur_node = findNode(number, tree);
-	if (!cur_node || !tree) //исключаем вариант, когда подается пустое дерево или удаляемого узла (УУ) нет в дереве
+	if (!cur_node || !tree) //исключаем вариант, когда подается пустое дерево или удаляемого узла (УУ) нет
 		return tree;
 
 	TreeNode *new_root = NULL; //переменная, необходимая для замены корня дерева на новый в случае его удаления
