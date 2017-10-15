@@ -1,64 +1,69 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "matrix.h"
 
 Matrix* create_matrix(int row, int col)
 {
-	M.row = row;
-	M.col = col;
-	M.element = (Element*) malloc(sizeof(Element) * row * col);
-	if (M.element == NULL)
+	Matrix matrix;
+	matrix.rows = row;
+	matrix.cols = col;
+	matrix.element = (Element*) malloc(sizeof(Element) * row * col);
+	if (matrix.element == NULL)
 		return NULL;
-	return &M;
+	Matrix *matrix_ptr = (Matrix*) malloc(sizeof(Matrix));
+	*matrix_ptr = matrix;
+	return matrix_ptr;
 }
 
 Matrix* create_matrix_from_file(FILE* file)
 {
+	Matrix matrix;
 	if (file == NULL)
 		return NULL;
-	if (fscanf(file, "%d %d", &M.row, &M.col) != 2)
+	if (fscanf(file, "%d %d", &matrix.rows, &matrix.cols) != 2)
 		return NULL;
-	if ((M.row < 1) || (M.col < 1))
+	if ((matrix.rows < 1) || (matrix.cols < 1))
 		return NULL;
-	M.element = (Element *) malloc(sizeof(Element) * M.row * M.col);
-	if (M.element == NULL)
+	matrix.element = (Element *) malloc(sizeof(Element) * matrix.rows * matrix.cols);
+	if (matrix.element == NULL)
 		return NULL;
-	for(int i = 0; i < M.row; i++)
-		for(int j = 0; j < M.col; j++)
+	for(int i = 0; i < matrix.rows; i++)
+		for (int j = 0; j < matrix.cols; j++)
 		{
-			if(fscanf(file, "%lf", &M.element[i*M.col+j].value) != 1)
+			if(fscanf(file, "%lf", &matrix.element[i * matrix.cols + j].value) != 1)
 				return NULL;
-			M.element[i*M.col+j].row_id = i;
-			M.element[i*M.col+j].col_id = j;
+			matrix.element[i * matrix.cols + j].row = i;
+			matrix.element[i * matrix.cols + j].col = j;
 		}
-	return &M;
+	Matrix *matrix_ptr = (Matrix*) malloc(sizeof(Matrix));
+	*matrix_ptr = matrix;
+	return matrix_ptr;
 }
 
 int get_rows(Matrix* matrix)
 {
-	return matrix->row;
+	return matrix->rows;
 }
 
 int get_cols(Matrix* matrix)
 {
-	return matrix->col;
+	return matrix->cols;
 }
 
 void set_elem(Matrix* matrix, int row, int col, double val)
 {
-	if ( (row > 0) || (row < (matrix->row)) || (col > 0) || (col < matrix->col) )
-		matrix->element[(matrix->col)*(row) + col].value = val;
+	if ( (row >= 0) && (row < (matrix->rows)) && (col >= 0) && (col < matrix->cols) )
+		matrix->element[matrix->cols * row + col].value = val;
 }
 
 double get_elem(Matrix* matrix, int row, int col)
 {
-	if ( (row > 0) || (row < (matrix->row)) || (col > 0) || (col < matrix->col) )
-		return matrix->element[(matrix->col)*(row) + col].value;
+	if ( (row >= 0) || (row < (matrix->rows)) || (col >= 0) || (col < matrix->cols) )
+		return matrix->element[matrix->cols * row + col].value;
 	else
-		return NaN;
+		return 0;
 }
 
 void free_matrix(Matrix* matrix)
 {
 	free(matrix->element);
+	free(matrix);
 }

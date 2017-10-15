@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -ggdb -Wno-return-local-addr
+CFLAGS := -ggdb -Wno-return-stack-address
 OBJS := matrix.o
 
 all : main.exe clean_o

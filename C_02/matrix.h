@@ -2,20 +2,19 @@
 #define _MATRIX_H_
 
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct Element {
-	int row_id;
-	int col_id;
+	int row;
+	int col;
 	double value;
 } Element;
 
 typedef struct Matrix {
-	int row;
-	int col;
+	int rows;
+	int cols;
 	Element* element;
 } Matrix;
-
-Matrix M;
 
 Matrix* create_matrix_from_file(FILE* file);
 Matrix* create_matrix(int row, int col);

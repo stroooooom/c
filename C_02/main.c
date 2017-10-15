@@ -1,37 +1,46 @@
-#include <stdio.h>
 #include <math.h>
 #include "matrix.h"
+
+#define ERROR_ARG "\nError: not enough arguments"
 
 double euclidNorm(Matrix* M);
 
 int main(int argc, char **agrv)
 {
-	if (argc > 1)
-		for(int i = 1; i < argc; i++)
+	if (argc <= 1)
+	{
+		printf(ERROR_ARG);
+		return 1;
+	}
+	for (int i = 1; i < argc; i++)
+	{
+		FILE *file = fopen(agrv[i], "r");
+		if (!file)
 		{
-			FILE *file = fopen(agrv[i], "r");
-			if (file == NULL)
-			{
-				printf("\n'%s': file was not found", agrv[i]);
-				return 1;
-			}
-			Matrix *M = create_matrix_from_file(file);
-			if (M != NULL)
-				printf("\n'%s': euclidian matrix norm is %g", agrv[i], euclidNorm(M));
-			fclose(file);
-			free_matrix(M);
+			printf("\n'%s': file was not found", agrv[i]);
+			continue;
 		}
-	else
-		printf("\nError: not enough arguments");
+		Matrix *matrix = create_matrix_from_file(file);
+		if (matrix)
+		{
+			printf("\n'%s': euclidian matrix norm is %g", agrv[i], euclidNorm(matrix));
+		}
+		else
+		{
+			printf("\n'%s': error while creating this matrix", agrv[i]);
+		}
+		fclose(file);
+		free_matrix(matrix);
+	}
 	return 0;
 }
 
-double euclidNorm(Matrix* M)
+double euclidNorm(Matrix* matrix)
 {
-	double sum = 0;
-	int rows = get_rows(M);
-	int cols = get_cols(M);
-	for(int i = 0; i < rows*cols; i++)
-		sum += pow(M->element[i].value, 2);
+	double sum = 0.0;
+	int rows = get_rows(matrix);
+	int cols = get_cols(matrix);
+	for (int i = 0; i < rows * cols; i++)
+		sum += matrix->element[i].value * matrix->element[i].value;
 	return sqrt(sum);
 }
